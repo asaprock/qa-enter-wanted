@@ -37,12 +37,47 @@ module.exports = {
             .click(selectors.buttons.submit)
             .pause(100)
             //expect header to be right
-            .expect.element(selectors.messages.header).text.to.equal(transaction.results.header)
+        .expect.element(selectors.messages.header).text.to.equal(transaction.results.header)
             //expect error list to contain all the right errors
         functions.messagesCheck(selectors.messages.errorList, transaction.results.errorList, browser)
             //expect query title to be right
         browser.expect.element(selectors.messages.queryTitle).text.to.equal(transaction.results.queryTitle)
             //expect assembled query to be right
         browser.expect.element(selectors.messages.assembledQuery).text.to.equal(transaction.results.assembledQuery)
+    },
+    'accepts good data' : browser => {
+            //set the transaction from your data file
+        let transaction = data.transactions.olnOnly
+            //send the fields & data to input
+        functions.inputSet(selectors.fields, data.transactions.olnOnly.fields, browser)
+        browser
+            //submit
+            .click(selectors.buttons.submit)
+            .pause(100)
+            //expect header to be right
+        .expect.element(selectors.messages.header).text.to.equal(transaction.results.header)
+            //expect error list to contain all the right errors
+        functions.messagesCheck(selectors.messages.errorList, transaction.results.errorList, browser)
+            //expect query title to be right
+        browser.expect.element(selectors.messages.queryTitle).text.to.equal(transaction.results.queryTitle)
+            //expect assembled query to be right
+        browser.expect.element(selectors.messages.assembledQuery).text.to.equal(transaction.results.assembledQuery)
+    },
+    'can put too short of data' : browser => {
+        //set the transaction from your data file
+    let transaction = data.transactions.tooShort        //send the fields & data to input
+    functions.inputSet(selectors.fields, data.transactions.tooShort.fields, browser)
+    browser
+        //submit
+        .click(selectors.buttons.submit)
+        .pause(500)
+        //expect header to be right
+    .expect.element(selectors.messages.header).text.to.equal(transaction.results.header)
+        //expect error list to contain all the right errors
+    functions.messagesCheck(selectors.messages.errorList, transaction.results.errorList, browser)
+        //expect query title to be right
+    browser.expect.element(selectors.messages.queryTitle).text.to.equal(transaction.results.queryTitle)
+        //expect assembled query to be right
+    browser.expect.element(selectors.messages.assembledQuery).text.to.equal(transaction.results.assembledQuery)
     }
 }
